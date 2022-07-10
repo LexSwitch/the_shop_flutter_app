@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/cart.dart' show Cart;
+import '../providers/orders.dart';
 import '../widgets/cart_item.dart';
 
 class CartScreen extends StatelessWidget {
@@ -12,6 +13,7 @@ class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<Cart>(context);
+    final order = Provider.of<Orders>(context, listen: false);
 
     return Scaffold(
       appBar: AppBar(
@@ -35,7 +37,7 @@ class CartScreen extends StatelessWidget {
                   Spacer(),
                   Chip(
                     label: Text(
-                      '\$${cart.cartTotal.toStringAsFixed(2)}',
+                      '${'¢' + cart.cartTotal.toStringAsFixed(2)}',
                       style: TextStyle(
                           color: Theme.of(context)
                               .primaryTextTheme
@@ -46,7 +48,22 @@ class CartScreen extends StatelessWidget {
                   ),
                   TextButton(
                       onPressed: () {
-                        print("Order placed.");
+                        if (cart.items.isEmpty) {
+                          // print('Cart is empty');
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('Cart is empty')));
+                        } else {
+                          order.addOrder(
+                              cart.items.values.toList(), cart.cartTotal);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                "Order placed successfully.",
+                              ),
+                            ),
+                          );
+                          cart.clearCart();
+                        }
                       },
                       child: Text(
                         "ORDER NOW",
