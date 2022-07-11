@@ -37,7 +37,7 @@ class CartScreen extends StatelessWidget {
                   Spacer(),
                   Chip(
                     label: Text(
-                      '${'¢' + cart.cartTotal.toStringAsFixed(2)}',
+                      '¢${cart.cartTotal.toStringAsFixed(2)}',
                       style: TextStyle(
                           color: Theme.of(context)
                               .primaryTextTheme
@@ -49,14 +49,16 @@ class CartScreen extends StatelessWidget {
                   TextButton(
                       onPressed: () {
                         if (cart.items.isEmpty) {
-                          // print('Cart is empty');
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('Cart is empty')));
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text('Cart is empty'),
+                            duration: Duration(seconds: 1),
+                          ));
                         } else {
                           order.addOrder(
                               cart.items.values.toList(), cart.cartTotal);
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
+                              duration: Duration(seconds: 1),
                               content: Text(
                                 "Order placed successfully.",
                               ),

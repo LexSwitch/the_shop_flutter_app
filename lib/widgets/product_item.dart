@@ -52,6 +52,7 @@ class ProductItem extends StatelessWidget {
               onPressed: () {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
+                    duration: Duration(seconds: 1),
                     content: Text(
                       "Item added to cart",
                     ),

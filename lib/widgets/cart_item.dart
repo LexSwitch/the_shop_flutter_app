@@ -28,6 +28,7 @@ class CartItem extends StatelessWidget {
         Provider.of<Cart>(context, listen: false).removeItem(productId);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
+            duration: Duration(seconds: 1),
             content: Text(
               "Item removed from cart",
             ),
@@ -59,14 +60,13 @@ class CartItem extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.all(5),
                 child: FittedBox(
-                  child: Text('${'¢' + price.toString()}'),
+                  child: Text('¢${price.toStringAsFixed(2)}'),
                 ),
               ),
             ),
             title: Text(title),
-            subtitle: Text('Total: ' + '${'¢' + (quantity * price).toString()}')
-            // 'Total:' + '¢' + (quantity * price).toStringAsFixed(2) }'
-            ,
+            subtitle:
+                Text('Total: ' + '¢${(quantity * price).toStringAsFixed(2)}'),
             trailing: Text('$quantity x'),
           ),
         ),
